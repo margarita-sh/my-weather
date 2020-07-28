@@ -1,0 +1,11 @@
+<form [formGroup]="myForm" novalidate (ngSubmit)="loadData()">
+	<div class="form-group">
+		<label>Введите город</label>
+		<input class="form-control" name="country" formControlName="country" [(ngModel)]="country" />
+		<button class="btn btn-default" [disabled]="myForm.invalid">
+			Отправить
+		</button>
+		</div>
+</form>
+	
+
