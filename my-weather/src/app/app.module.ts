@@ -7,6 +7,7 @@ import { MainComponent } from './main/main.component';
 import { WeatherService } from './main/service/api.weather.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { GeolocationService } from './main/service/geolocation.service';
 
 @NgModule({
 	declarations: [
@@ -19,7 +20,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 		ReactiveFormsModule,
 		HttpClientModule
 	],
-	providers: [WeatherService],
+	providers: [WeatherService, GeolocationService],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

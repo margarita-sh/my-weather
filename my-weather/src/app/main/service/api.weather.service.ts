@@ -15,8 +15,8 @@ return this.httpClient.get(`https://api.openweathermap.org/data/2.5/weather?q=${
 	map((data: ModelAPI.WeatherAPI) => {
 		const weatherData: WeatherData = new WeatherData();
 		weatherData.parseModel(data);
-		console.log('weatherData', weatherData);
-return weatherData;
+ 		console.log(weatherData);
+		return weatherData;
 	})
 );
 }

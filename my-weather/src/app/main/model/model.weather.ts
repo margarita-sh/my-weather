@@ -25,6 +25,5 @@ export class WeatherData {
 		this.speed = data.wind.speed;
 		this.sunrise = data.sys.sunrise;
 		this.sunset = data.sys.sunset;
-
 	}
 }
