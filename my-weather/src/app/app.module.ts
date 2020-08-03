@@ -8,6 +8,9 @@ import { WeatherService } from './main/service/api.weather.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { GeolocationService } from './main/service/geolocation.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
 	declarations: [
@@ -18,7 +21,10 @@ import { GeolocationService } from './main/service/geolocation.service';
 		BrowserModule,
 		AppRoutingModule,
 		ReactiveFormsModule,
-		HttpClientModule
+		HttpClientModule,
+		BrowserAnimationsModule,
+		MatInputModule,
+		MatIconModule,
 	],
 	providers: [WeatherService, GeolocationService],
 	bootstrap: [AppComponent]

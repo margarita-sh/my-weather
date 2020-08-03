@@ -1,23 +1,28 @@
-<form [formGroup]="myForm" novalidate (ngSubmit)="loadData()">
+
+<div class = "app-main">
+<form [formGroup]="myForm" novalidate (ngSubmit)="loadData()" class="example-form">
 	<div class="form-group">
-		<label>Введите город</label>
-		<input class="form-control" name="country" formControlName="country" [(ngModel)]="country" />
-		<button class="btn btn-default" [disabled]="myForm.invalid">
-			Отправить
-		</button>
+		<mat-form-field class="app-main--form">
+			<mat-label>City name</mat-label>
+			<input matInput type="text" class="form-control" formControlName="country" [(ngModel)]="country">
+			<button mat-button *ngIf="country" matSuffix mat-icon-button aria-label="Clear" (click)="country=''" class="app-main--imput-btn">
+			  <mat-icon>close</mat-icon>
+			</button>
+		  </mat-form-field> 
 		</div>
-		<div>temperature: {{temperature}}</div>
-		<div>Feels Temerature: {{feelsTemp}}</div>
-		<div>min Temperature: {{minTemp}}</div>
-		<div>max Temperature: {{maxTemp}}</div>
+		<div class="app-main--common-temperature">
+		<div class="app-main--temperature common">{{temperature}} °C</div>
+		<div class="app-main--feelsTemp common">Feels Temerature: {{feelsTemp}} °C</div>
+		<div class="app-main--minmaxTemperature common">
+		<div class="app-main--mintemperature">min Temperature: {{minTemp}} °C</div>
+		<div class="app-main--maxtemperature">max Temperature: {{maxTemp}}°C</div>
+	   </div>
+	   </div>
 		<div>pressure: {{pressure}} mm</div>
 		<div>humidity: {{humidity}} %</div>
 		<div>visibility {{visibility}}</div>
 		<div>speed: {{speed}}</div>
 		<div>sunrise: {{sunrise}}</div>
 		<div>sunset: {{sunset}}</div>
-<!-- 		<div>location: {{location}}</div> -->
-
 </form>
-	
-
+</div>

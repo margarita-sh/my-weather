@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, Subject, Subscription } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
 
@@ -33,12 +33,9 @@ export class GeolocationService {
 	public loadLocation(coord: string): Observable<any> {
 		// tslint:disable-next-line: typedef
 		const a = `https://geocode-maps.yandex.ru/1.x/?format=json&apikey=${this.myKey}&geocode=${coord}`;
-		console.log(a, 'a');
 		return this.httpClient.get(`https://geocode-maps.yandex.ru/1.x/?format=json&apikey=${this.myKey}&geocode=${coord}`).pipe(
 			// tslint:disable-next-line: typedef
 			map((data: any) => {
-				console.log('data', data);
-				console.log('data.FILTER', data.response.GeoObjectCollection.featureMember.map((item: any) => item.GeoObject));
 				const arrayData: Array<{}> = data.response.GeoObjectCollection.featureMember.map((item: any) => item.GeoObject);
 				console.log('arrayData', arrayData);
 				const xxx: any = arrayData.find((item: any) => item.metaDataProperty.GeocoderMetaData.kind === 'locality');
