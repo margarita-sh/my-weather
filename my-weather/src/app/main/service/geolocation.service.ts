@@ -1,28 +1,53 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable, of, Subject, Subscription } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+
 
 @Injectable()
 export class GeolocationService {
-private myKey: string = 'abc41fbc-7058-428f-a054-f484c95cf718';
+	private myKey: string = 'abc41fbc-7058-428f-a054-f484c95cf718';
+	public constructor(private httpClient: HttpClient) { }
 
-public x: string;
+	public getLocation(): Observable<any> {
+		const sendResult: any = new Subject<string>();
 
-/* public constructor(private httpClient: HttpClient) { } */
-public getLocation(): void {
-  if (navigator.geolocation) {
-	navigator.geolocation.getCurrentPosition(this.showPosition);
-  } else {
-	this.x = 'Geolocation is not supported by this browser.';
-  }
-}
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition((position: any) => {
+				sendResult.next(`${position.coords.longitude},${position.coords.latitude}`);
+			});
+		} else {
+			sendResult.error('error');
+		}
 
-public showPosition(position: any): void {
-  // tslint:disable-next-line: prefer-template
-  this.x = 'Latitude: ' + position.coords.latitude + '<br>Longitude: ' + position.coords.longitude;
-}
+		return sendResult.asObservable();
+	}
+	public locationData(): Observable<string> {
+		return this.getLocation().pipe(
+			switchMap((coord: string) => {
+				return this.loadLocation(coord);
+			})
+		);
+	}
 
-/* public loadWeather(country: string): Observable<any> {
-return this.httpClient.get().pipe(
-);
-} */
+	public loadLocation(coord: string): Observable<any> {
+		// tslint:disable-next-line: typedef
+		const a = `https://geocode-maps.yandex.ru/1.x/?format=json&apikey=${this.myKey}&geocode=${coord}`;
+		console.log(a, 'a');
+		return this.httpClient.get(`https://geocode-maps.yandex.ru/1.x/?format=json&apikey=${this.myKey}&geocode=${coord}`).pipe(
+			// tslint:disable-next-line: typedef
+			map((data: any) => {
+				console.log('data', data);
+				console.log('data.FILTER', data.response.GeoObjectCollection.featureMember.map((item: any) => item.GeoObject));
+				const arrayData: Array<{}> = data.response.GeoObjectCollection.featureMember.map((item: any) => item.GeoObject);
+				console.log('arrayData', arrayData);
+				const xxx: any = arrayData.find((item: any) => item.metaDataProperty.GeocoderMetaData.kind === 'locality');
+				if (xxx) {
+					return xxx.name;
+				} else {
+					return '';
+				}
+			})
+		);
+	}
 }
