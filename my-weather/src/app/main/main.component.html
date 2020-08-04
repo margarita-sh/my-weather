@@ -5,7 +5,7 @@
 		<mat-form-field class="app-main--form">
 			<mat-label>City name</mat-label>
 			<input matInput type="text" class="form-control" formControlName="country" [(ngModel)]="country">
-			<button mat-button *ngIf="country" matSuffix mat-icon-button aria-label="Clear" (click)="country=''" class="app-main--imput-btn">
+			<button mat-button *ngIf="country" matSuffix mat-icon-button aria-label="Clear" type = "button" (click)="country=''" class="app-main--imput-btn">
 			  <mat-icon>close</mat-icon>
 			</button>
 		  </mat-form-field> 

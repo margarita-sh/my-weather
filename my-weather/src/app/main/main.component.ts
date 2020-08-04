@@ -43,7 +43,7 @@ export class MainComponent implements OnInit, OnDestroy {
 	}
 
 	public loadData(): void {
-		const aaa = this.http.loadWeather(this.country).subscribe((item: any) => {
+		    this.http.loadWeather(this.country).subscribe((item: any) => {
 			this.temperature = item.temperature;
 			this.feelsTemp = item.feelsTemp;
 			this.minTemp = item.minTemp;
