@@ -7,6 +7,7 @@ import { map, switchMap } from 'rxjs/operators';
 @Injectable()
 export class GeolocationService {
 	private myKey: string = 'abc41fbc-7058-428f-a054-f484c95cf718';
+	public position:any;
 	public constructor(private httpClient: HttpClient) { }
 
 	public getLocation(): Observable<any> {
@@ -38,9 +39,11 @@ export class GeolocationService {
 			map((data: any) => {
 				const arrayData: Array<{}> = data.response.GeoObjectCollection.featureMember.map((item: any) => item.GeoObject);
 				console.log('arrayData', arrayData);
-				const xxx: any = arrayData.find((item: any) => item.metaDataProperty.GeocoderMetaData.kind === 'locality');
-				if (xxx) {
-					return xxx.name;
+					this.position = arrayData[0].Point.pos.split(' ');
+				console.log('this.position', this.position);
+				const cityName: any = arrayData.find((item: any) => item.metaDataProperty.GeocoderMetaData.kind === 'locality');
+				if (cityName) {
+					return cityName.name;
 				} else {
 					return '';
 				}

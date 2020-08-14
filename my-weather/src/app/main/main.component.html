@@ -1,7 +1,14 @@
 
 <div class = "app-main">
+	   <ng-container *ngIf="loading">
+		   <div class="app-main--loading">
+		<mat-spinner [mode]="mode" [value]="valueProgressSpinner" aria-label="showText"
+		[strokeWidth]="strokeWidth" [diameter]="diameter"></mat-spinner>
+		   </div>
+	  </ng-container>
+	  <ng-container *ngIf="!loading">
 <form [formGroup]="myForm" novalidate (ngSubmit)="loadData()" class="example-form">
-	<div class="form-group">
+	<div class="app-main--form-group">
 		<mat-form-field class="app-main--form">
 			<mat-label>City name</mat-label>
 			<input matInput type="text" class="form-control" formControlName="country" [(ngModel)]="country">
@@ -10,19 +17,31 @@
 			</button>
 		  </mat-form-field> 
 		</div>
-		<div class="app-main--common-temperature">
-		<div class="app-main--temperature common">{{temperature}} °C</div>
-		<div class="app-main--feelsTemp common">Feels Temerature: {{feelsTemp}} °C</div>
-		<div class="app-main--minmaxTemperature common">
-		<div class="app-main--mintemperature">min Temperature: {{minTemp}} °C</div>
-		<div class="app-main--maxtemperature">max Temperature: {{maxTemp}}°C</div>
+		<div class="app-main--section">
+			<div class="app-main--aaa">
+		<div class="app-main--city city">
+			<p>{{country}}</p>
+			<span class="time">{{time | date : 'EEEE / MMMM d / h:mm:ss'}}</span>
+		</div>
+		<div class="app-main--common-block">
+		<div class="app-main--temperature">{{temperature}}°</div>
+		<div class="app-main--general-indicators general-indicators">
+		<div class="indicators">Feels Temerature: {{feelsTemp}}°</div>
+		<div class="indicators">min Temperature: {{minTemp}}°</div>
+		<div class="indicators">max Temperature: {{maxTemp}}°</div>
+		<div class="indicators">pressure: {{pressure}} mm</div>
+		<div class="indicators">humidity: {{humidity}} %</div>
+		<div class="indicators">visibility {{visibility}}</div>
+		<div class="indicators">speed: {{speed}}</div>
+		<div class="indicators">sunrise: {{sunrise}}</div>
+		<div class="indicators">sunset: {{sunset}}</div>
+		</div>
 	   </div>
-	   </div>
-		<div>pressure: {{pressure}} mm</div>
-		<div>humidity: {{humidity}} %</div>
-		<div>visibility {{visibility}}</div>
-		<div>speed: {{speed}}</div>
-		<div>sunrise: {{sunrise}}</div>
-		<div>sunset: {{sunset}}</div>
+	</div>
+	<div class="app-main--map">
+		<app-maps></app-maps>
+	</div>
+</div>
 </form>
+</ng-container>
 </div>

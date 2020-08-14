@@ -11,11 +11,14 @@ import { GeolocationService } from './main/service/geolocation.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
+import { MapsComponent } from './maps/maps.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
 	declarations: [
 		AppComponent,
-		MainComponent
+		MainComponent,
+		MapsComponent
 	],
 	imports: [
 		BrowserModule,
@@ -25,6 +28,7 @@ import {MatIconModule} from '@angular/material/icon';
 		BrowserAnimationsModule,
 		MatInputModule,
 		MatIconModule,
+		MatProgressSpinnerModule,
 	],
 	providers: [WeatherService, GeolocationService],
 	bootstrap: [AppComponent]
