@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { WeatherService } from './service/api.weather.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { GeolocationService } from './service/geolocation.service';
 import { Subscription } from 'rxjs';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
+import { MapsComponent } from '../maps/maps.component';
 
 @Component({
 	selector: 'app-main',
@@ -11,6 +12,8 @@ import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 	styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit, OnDestroy {
+	@ViewChild(MapsComponent, {static: false})
+	private mapsComponent: MapsComponent;
 	public loading: boolean = false;
 	public mode: ProgressSpinnerMode = 'indeterminate';
 	public strokeWidth: number = 10;
@@ -30,6 +33,10 @@ export class MainComponent implements OnInit, OnDestroy {
 	public location: string;
 	public subscription: Subscription;
 	public time: Date = new Date();
+	public countryInput='';
+
+
+
 
 	constructor(private http: WeatherService, private geo: GeolocationService) {
 		this.myForm = new FormGroup({
@@ -50,6 +57,12 @@ export class MainComponent implements OnInit, OnDestroy {
 
 	}
 
+	public onCitySubmit(){
+		this.country = this.countryInput;
+		this.loadData();
+		this.geo.loadCoord(this.country).subscribe((item: any) =>  this.mapsComponent.setMarker(item));
+	}
+
 	public loadData(): void {
 			this.http.loadWeather(this.country).subscribe((item: any) => {
 			this.temperature = item.temperature;
@@ -64,17 +77,5 @@ export class MainComponent implements OnInit, OnDestroy {
 			this.sunset = new Date(item.sunset * 1000).toLocaleTimeString();
 		});
 	}
-
-
-
-/* 	loading: boolean = false;
- data = [];
- ngOnInit() {
-  this.loading = true;
-  this.service.getAll().subscribe(res => {
-   this.data = res;
-   this.loading = false;
-  });
- } */
 
 }

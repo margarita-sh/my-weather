@@ -23,6 +23,7 @@ export class GeolocationService {
 
 		return sendResult.asObservable();
 	}
+
 	public locationData(): Observable<string> {
 		return this.getLocation().pipe(
 			switchMap((coord: string) => {
@@ -33,8 +34,8 @@ export class GeolocationService {
 
 	public loadLocation(coord: string): Observable<any> {
 		// tslint:disable-next-line: typedef
-		const a = `https://geocode-maps.yandex.ru/1.x/?format=json&apikey=${this.myKey}&geocode=${coord}`;
-		return this.httpClient.get(`https://geocode-maps.yandex.ru/1.x/?format=json&apikey=${this.myKey}&geocode=${coord}`).pipe(
+		const url = `https://geocode-maps.yandex.ru/1.x/?format=json&apikey=${this.myKey}&geocode=${coord}`;
+		return this.httpClient.get(url).pipe(
 			// tslint:disable-next-line: typedef
 			map((data: any) => {
 				const arrayData: Array<{}> = data.response.GeoObjectCollection.featureMember.map((item: any) => item.GeoObject);
@@ -47,6 +48,18 @@ export class GeolocationService {
 				} else {
 					return '';
 				}
+			})
+		);
+	}
+
+	public loadCoord(cityInput: string): Observable<any> {
+		// tslint:disable-next-line: typedef
+		const url = `https://geocode-maps.yandex.ru/1.x/?format=json&apikey=${this.myKey}&geocode=${cityInput}`;
+		return this.httpClient.get(url).pipe(
+			map((data: any) => {
+				const arrayData: Array<{}> = data.response.GeoObjectCollection.featureMember.map((item: any) => item.GeoObject);
+				console.log('arrayData', arrayData);
+				return arrayData[0].Point.pos.split(' ').reverse();
 			})
 		);
 	}

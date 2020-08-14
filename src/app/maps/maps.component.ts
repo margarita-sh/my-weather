@@ -12,19 +12,21 @@ export class MapsComponent implements OnInit {
 private myKey: string = '5211abf32aeba9a166b91f5e2bba0e49';
 
 public mymap: any;
-  /* public latitudeAPI = this.pos.position[1];
-  public longitude = this.pos.position[0]; */
   public positionLeaflet: any = this.pos.position.map((item: any) => Number(item)).reverse();
 
   constructor(private pos: GeolocationService) {}
   public ngOnInit(): void {
 	  console.log('positionLeaflet', this.positionLeaflet);
-	 this.mymap = L.map('mapid').setView(this.positionLeaflet, 15);
+	 this.mymap = L.map('mapid').setView(this.positionLeaflet, 13);
 	 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 	}).addTo(this.mymap);
- 	L.marker(this.positionLeaflet).addTo(this.mymap)
-		.bindPopup('You here')
+ 	this.setMarker(this.positionLeaflet);
+}
+
+public setMarker(position){
+	L.marker(position).addTo(this.mymap)
+		.bindPopup('You are here')
 		.openPopup();
 }
 

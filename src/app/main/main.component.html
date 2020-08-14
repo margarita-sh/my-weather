@@ -1,47 +1,45 @@
-
-<div class = "app-main">
-	   <ng-container *ngIf="loading">
-		   <div class="app-main--loading">
-		<mat-spinner [mode]="mode" [value]="valueProgressSpinner" aria-label="showText"
-		[strokeWidth]="strokeWidth" [diameter]="diameter"></mat-spinner>
-		   </div>
-	  </ng-container>
-	  <ng-container *ngIf="!loading">
-<form [formGroup]="myForm" novalidate (ngSubmit)="loadData()" class="example-form">
-	<div class="app-main--form-group">
-		<mat-form-field class="app-main--form">
-			<mat-label>City name</mat-label>
-			<input matInput type="text" class="form-control" formControlName="country" [(ngModel)]="country">
-			<button mat-button *ngIf="country" matSuffix mat-icon-button aria-label="Clear" type = "button" (click)="country=''" class="app-main--imput-btn">
+<div class="app-main">
+    <ng-container *ngIf="loading">
+        <div class="app-main--loading">
+            <mat-spinner [mode]="mode" [value]="valueProgressSpinner" aria-label="showText" [strokeWidth]="strokeWidth" [diameter]="diameter"></mat-spinner>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!loading">
+        <form [formGroup]="myForm" novalidate (ngSubmit)="onCitySubmit()" class="example-form">
+            <div class="app-main--form-group">
+                <mat-form-field class="app-main--form">
+                    <mat-label>City name</mat-label>
+                    <input matInput type="text" class="form-control" formControlName="country" [(ngModel)]="countryInput">
+                    <button mat-button *ngIf="countryInput" matSuffix mat-icon-button aria-label="Clear" type="button" (click)="countryInput=''" class="app-main--imput-btn">
 			  <mat-icon>close</mat-icon>
 			</button>
-		  </mat-form-field> 
-		</div>
-		<div class="app-main--section">
-			<div class="app-main--aaa">
-		<div class="app-main--city city">
-			<p>{{country}}</p>
-			<span class="time">{{time | date : 'EEEE / MMMM d / h:mm:ss'}}</span>
-		</div>
-		<div class="app-main--common-block">
-		<div class="app-main--temperature">{{temperature}}°</div>
-		<div class="app-main--general-indicators general-indicators">
-		<div class="indicators">Feels Temerature: {{feelsTemp}}°</div>
-		<div class="indicators">min Temperature: {{minTemp}}°</div>
-		<div class="indicators">max Temperature: {{maxTemp}}°</div>
-		<div class="indicators">pressure: {{pressure}} mm</div>
-		<div class="indicators">humidity: {{humidity}} %</div>
-		<div class="indicators">visibility {{visibility}}</div>
-		<div class="indicators">speed: {{speed}}</div>
-		<div class="indicators">sunrise: {{sunrise}}</div>
-		<div class="indicators">sunset: {{sunset}}</div>
-		</div>
-	   </div>
-	</div>
-	<div class="app-main--map">
-		<app-maps></app-maps>
-	</div>
-</div>
-</form>
-</ng-container>
+                </mat-form-field>
+            </div>
+            <div class="app-main--section">
+                <div class="app-main--aaa">
+                    <div class="app-main--city city">
+                        <p>{{country}}</p>
+                        <span class="time">{{time | date : 'EEEE / MMMM d / h:mm:ss'}}</span>
+                    </div>
+                    <div class="app-main--common-block">
+                        <div class="app-main--temperature">{{temperature}}°</div>
+                        <div class="app-main--general-indicators general-indicators">
+                            <div class="indicators">Feels Temerature: {{feelsTemp}}°</div>
+                            <div class="indicators">min Temperature: {{minTemp}}°</div>
+                            <div class="indicators">max Temperature: {{maxTemp}}°</div>
+                            <div class="indicators">pressure: {{pressure}} mm</div>
+                            <div class="indicators">humidity: {{humidity}} %</div>
+                            <div class="indicators">visibility {{visibility}}</div>
+                            <div class="indicators">speed: {{speed}}</div>
+                            <div class="indicators">sunrise: {{sunrise}}</div>
+                            <div class="indicators">sunset: {{sunset}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="app-main--map">
+                    <app-maps></app-maps>
+                </div>
+            </div>
+        </form>
+    </ng-container>
 </div>
