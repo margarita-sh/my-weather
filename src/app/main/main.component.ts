@@ -33,10 +33,7 @@ export class MainComponent implements OnInit, OnDestroy {
 	public location: string;
 	public subscription: Subscription;
 	public time: Date = new Date();
-	public countryInput='';
-
-
-
+	public countryInput: string = '';
 
 	constructor(private http: WeatherService, private geo: GeolocationService) {
 		this.myForm = new FormGroup({
@@ -57,7 +54,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
 	}
 
-	public onCitySubmit(){
+	public onCitySubmit(): void {
 		this.country = this.countryInput;
 		this.loadData();
 		this.geo.loadCoord(this.country).subscribe((item: any) =>  this.mapsComponent.setMarker(item));
@@ -73,7 +70,9 @@ export class MainComponent implements OnInit, OnDestroy {
 			this.humidity = item.humidity ;
 			this.visibility = item.visibility;
 			this.speed = item.speed;
+			// tslint:disable-next-line: no-magic-numbers
 			this.sunrise = new Date(item.sunrise * 1000).toLocaleTimeString();
+			// tslint:disable-next-line: no-magic-numbers
 			this.sunset = new Date(item.sunset * 1000).toLocaleTimeString();
 		});
 	}

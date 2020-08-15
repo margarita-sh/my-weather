@@ -17,6 +17,7 @@ public mymap: any;
   constructor(private pos: GeolocationService) {}
   public ngOnInit(): void {
 	  console.log('positionLeaflet', this.positionLeaflet);
+	 // tslint:disable-next-line: no-magic-numbers
 	 this.mymap = L.map('mapid').setView(this.positionLeaflet, 13);
 	 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -24,7 +25,7 @@ public mymap: any;
  	this.setMarker(this.positionLeaflet);
 }
 
-public setMarker(position){
+public setMarker(position: any): void {
 	L.marker(position).addTo(this.mymap)
 		.bindPopup('You are here')
 		.openPopup();

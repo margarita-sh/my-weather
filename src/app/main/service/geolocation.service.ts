@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-
+/* import { MetaDataProperty, GeocoderResponseMetaData } from '../model/model.geolocation'; */
+import { ModelGeolocation } from '../model/model.geolocation';
 
 @Injectable()
 export class GeolocationService {
 	private myKey: string = 'abc41fbc-7058-428f-a054-f484c95cf718';
-	public position:any;
+	public position: any;
 	public constructor(private httpClient: HttpClient) { }
 
 	public getLocation(): Observable<any> {
@@ -24,7 +25,7 @@ export class GeolocationService {
 		return sendResult.asObservable();
 	}
 
-	public locationData(): Observable<string> {
+	public locationData(): Observable<any> {
 		return this.getLocation().pipe(
 			switchMap((coord: string) => {
 				return this.loadLocation(coord);
@@ -32,18 +33,21 @@ export class GeolocationService {
 		);
 	}
 
-	public loadLocation(coord: string): Observable<any> {
-		// tslint:disable-next-line: typedef
-		const url = `https://geocode-maps.yandex.ru/1.x/?format=json&apikey=${this.myKey}&geocode=${coord}`;
+	public loadLocation(coord: string): Observable<ModelGeolocation.RootObject> {
+		const url: string = `https://geocode-maps.yandex.ru/1.x/?format=json&apikey=${this.myKey}&geocode=${coord}`;
+		console.log(url);
 		return this.httpClient.get(url).pipe(
-			// tslint:disable-next-line: typedef
-			map((data: any) => {
-				const arrayData: Array<{}> = data.response.GeoObjectCollection.featureMember.map((item: any) => item.GeoObject);
+			map((data: ModelGeolocation.RootObject) => {
+				const arrayData: ModelGeolocation.GeoObject[] = data.response.GeoObjectCollection.featureMember.map((item: any) => item.GeoObject);
 				console.log('arrayData', arrayData);
-					this.position = arrayData[0].Point.pos.split(' ');
+				this.position = arrayData[0].Point.pos.split(' ');
 				console.log('this.position', this.position);
-				const cityName: any = arrayData.find((item: any) => item.metaDataProperty.GeocoderMetaData.kind === 'locality');
+				const cityName: any = arrayData.find((item: any) => {
+					const kind: string = item.metaDataProperty.GeocoderMetaData.kind;
+					 return kind === 'locality' || kind === 'country';
+				});
 				if (cityName) {
+					console.log('cityName', cityName);
 					return cityName.name;
 				} else {
 					return '';
@@ -56,9 +60,8 @@ export class GeolocationService {
 		// tslint:disable-next-line: typedef
 		const url = `https://geocode-maps.yandex.ru/1.x/?format=json&apikey=${this.myKey}&geocode=${cityInput}`;
 		return this.httpClient.get(url).pipe(
-			map((data: any) => {
-				const arrayData: Array<{}> = data.response.GeoObjectCollection.featureMember.map((item: any) => item.GeoObject);
-				console.log('arrayData', arrayData);
+			map((data: ModelGeolocation.RootObject) => {
+				const arrayData: ModelGeolocation.GeoObject[] = data.response.GeoObjectCollection.featureMember.map((item: any) => item.GeoObject);
 				return arrayData[0].Point.pos.split(' ').reverse();
 			})
 		);
