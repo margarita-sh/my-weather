@@ -13,6 +13,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import { MapsComponent } from './maps/maps.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { ImgService } from './main/service/img.service';
 
 @NgModule({
 	declarations: [
@@ -30,7 +31,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 		MatIconModule,
 		MatProgressSpinnerModule,
 	],
-	providers: [WeatherService, GeolocationService],
+	providers: [WeatherService, GeolocationService, ImgService],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

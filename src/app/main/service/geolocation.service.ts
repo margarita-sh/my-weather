@@ -35,19 +35,15 @@ export class GeolocationService {
 
 	public loadLocation(coord: string): Observable<ModelGeolocation.RootObject> {
 		const url: string = `https://geocode-maps.yandex.ru/1.x/?format=json&apikey=${this.myKey}&geocode=${coord}`;
-		console.log(url);
 		return this.httpClient.get(url).pipe(
 			map((data: ModelGeolocation.RootObject) => {
 				const arrayData: ModelGeolocation.GeoObject[] = data.response.GeoObjectCollection.featureMember.map((item: any) => item.GeoObject);
-				console.log('arrayData', arrayData);
 				this.position = arrayData[0].Point.pos.split(' ');
-				console.log('this.position', this.position);
 				const cityName: any = arrayData.find((item: any) => {
 					const kind: string = item.metaDataProperty.GeocoderMetaData.kind;
-					 return kind === 'locality' || kind === 'country';
+					 return kind === 'locality'  || kind === 'country';
 				});
 				if (cityName) {
-					console.log('cityName', cityName);
 					return cityName.name;
 				} else {
 					return '';

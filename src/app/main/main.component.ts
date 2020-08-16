@@ -5,6 +5,7 @@ import { GeolocationService } from './service/geolocation.service';
 import { Subscription } from 'rxjs';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { MapsComponent } from '../maps/maps.component';
+import { ImgService } from './service/img.service';
 
 @Component({
 	selector: 'app-main',
@@ -34,8 +35,9 @@ export class MainComponent implements OnInit, OnDestroy {
 	public subscription: Subscription;
 	public time: Date = new Date();
 	public countryInput: string = '';
+	public srcImg: string = '';
 
-	constructor(private http: WeatherService, private geo: GeolocationService) {
+	constructor(private http: WeatherService, private geo: GeolocationService, private linkImg: ImgService) {
 		this.myForm = new FormGroup({
 			country: new FormControl(),
 		});
@@ -44,8 +46,13 @@ export class MainComponent implements OnInit, OnDestroy {
 		  this.subscription.unsubscribe();
 	  }
 
+	/* public loadImgForBackground(): void {
+		this.linkImg.loadImg().subscribe((item: any) => this.srcImg = item);
+	} */
+
 	public ngOnInit(): void {
 	  this.loading = true;
+	  this.linkImg.loadImg().subscribe((data: any) => this.srcImg = data);
 	  this.subscription	=  this.geo.locationData().subscribe((item: any) => {
 			this.country = item;
 			this.loadData();
