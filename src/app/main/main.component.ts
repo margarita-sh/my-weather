@@ -34,12 +34,12 @@ export class MainComponent implements OnInit, OnDestroy {
 	public location: string;
 	public subscription: Subscription;
 	public time: Date = new Date();
-	public countryInput: string = '';
+ 	public countryInput: string = '';
 	public srcImg: string = '';
 
 	constructor(private http: WeatherService, private geo: GeolocationService, private linkImg: ImgService) {
 		this.myForm = new FormGroup({
-			country: new FormControl(),
+			countryInput: new FormControl(this.country),
 		});
 	}
 	public ngOnDestroy(): void {
@@ -55,6 +55,7 @@ export class MainComponent implements OnInit, OnDestroy {
 	  this.linkImg.loadImg().subscribe((data: any) => this.srcImg = data);
 	  this.subscription	=  this.geo.locationData().subscribe((item: any) => {
 			this.country = item;
+			console.log('this.country', this.country)
 			this.loadData();
 			this.loading = false;
 	   });
@@ -63,6 +64,8 @@ export class MainComponent implements OnInit, OnDestroy {
 
 	public onCitySubmit(): void {
 		this.country = this.countryInput;
+		console.log('this.countryInput', this.countryInput);
+		console.log('this.country', this.country);
 		this.loadData();
 		this.geo.loadCoord(this.country).subscribe((item: any) =>  this.mapsComponent.setMarker(item));
 	}

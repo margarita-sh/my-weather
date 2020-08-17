@@ -10,19 +10,19 @@
                 <div class="app-main--form-group ">
                     <mat-form-field class="app-main--form ">
                         <mat-label>City name</mat-label>
-                        <input matInput type="text " class="form-control " formControlName="country " [(ngModel)]="countryInput ">
-                        <button mat-button *ngIf="countryInput " matSuffix mat-icon-button aria-label="Clear " type="button " (click)="countryInput='' " class="app-main--imput-btn ">
+                        <input matInput type="text " class="form-control " formControlName="countryInput" [(ngModel)]="countryInput">
+                        <button mat-button *ngIf="countryInput " matSuffix mat-icon-button aria-label="Clear " type="button" class=" app-main--imput-btn" (click)="countryInput=''">
 			  <mat-icon>close</mat-icon>
 			</button>
                     </mat-form-field>
                 </div>
                 <div class="app-main--section ">
-                    <div class="app-main--data">
+                    <div class="app-main--data ">
                         <div class="app-main--city city ">
                             <p>{{country}}</p>
                             <span class="time ">{{time | date : 'EEEE / MMMM d / HH:mm:ss'}}</span>
                         </div>
-                        <div class="app-main--common-block">
+                        <div class="app-main--common-block ">
                             <div class="app-main--temperature ">{{temperature}}°</div>
                             <div class="app-main--general-indicators general-indicators ">
                                 <div class="indicators ">Feels Temerature: {{feelsTemp}}°</div>
