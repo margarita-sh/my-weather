@@ -13,14 +13,14 @@ import { ImgService } from './service/img.service';
 	styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit, OnDestroy {
-	@ViewChild(MapsComponent, {static: false})
+	@ViewChild(MapsComponent, { static: false })
 	private mapsComponent: MapsComponent;
 	public loading: boolean = false;
 	public mode: ProgressSpinnerMode = 'indeterminate';
 	public strokeWidth: number = 10;
 	public diameter: number = 100;
 	public myForm: FormGroup;
-	public country: any;
+	public city: any;
 	public temperature: number;
 	public feelsTemp: number;
 	public minTemp: number;
@@ -34,57 +34,59 @@ export class MainComponent implements OnInit, OnDestroy {
 	public location: string;
 	public subscription: Subscription;
 	public time: Date = new Date();
- 	public countryInput: string = '';
+	public cityInput: string = '';
 	public srcImg: string = '';
+	public arrayCoordFromInput: any;
 
 	constructor(private http: WeatherService, private geo: GeolocationService, private linkImg: ImgService) {
 		this.myForm = new FormGroup({
-			countryInput: new FormControl(this.country),
+			cityInput: new FormControl(),
 		});
 	}
 	public ngOnDestroy(): void {
-		  this.subscription.unsubscribe();
-	  }
-
-	/* public loadImgForBackground(): void {
-		this.linkImg.loadImg().subscribe((item: any) => this.srcImg = item);
-	} */
+		this.subscription.unsubscribe();
+	}
 
 	public ngOnInit(): void {
-	  this.loading = true;
-	  this.linkImg.loadImg().subscribe((data: any) => this.srcImg = data);
-	  this.subscription	=  this.geo.locationData().subscribe((item: any) => {
-			this.country = item;
-			console.log('this.country', this.country)
+		this.loading = true;
+		this.linkImg.loadImg().subscribe((data: any) => this.srcImg = data);
+		this.subscription = this.geo.locationData().subscribe((item: any) => {
+			this.city = item;
 			this.loadData();
 			this.loading = false;
-	   });
+		});
 
 	}
 
 	public onCitySubmit(): void {
-		this.country = this.countryInput;
-		console.log('this.countryInput', this.countryInput);
-		console.log('this.country', this.country);
+	/* 	this.city = this.cityInput; */
+/* 	this.city ='...'; */
 		this.loadData();
-		this.geo.loadCoord(this.country).subscribe((item: any) =>  this.mapsComponent.setMarker(item));
+		this.geo.loadCoordFromInput(this.cityInput).subscribe((item: any) => {
+			this.mapsComponent.setMarker(item.coords);
+			this.city = item.town;
+		});
 	}
 
 	public loadData(): void {
-			this.http.loadWeather(this.country).subscribe((item: any) => {
-			this.temperature = item.temperature;
-			this.feelsTemp = item.feelsTemp;
-			this.minTemp = item.minTemp;
-			this.maxTemp = item.maxTemp;
-			this.pressure = item.pressure;
-			this.humidity = item.humidity ;
-			this.visibility = item.visibility;
-			this.speed = item.speed;
-			// tslint:disable-next-line: no-magic-numbers
-			this.sunrise = new Date(item.sunrise * 1000).toLocaleTimeString();
-			// tslint:disable-next-line: no-magic-numbers
-			this.sunset = new Date(item.sunset * 1000).toLocaleTimeString();
+		this.geo.loadCoordFromInput(this.city).subscribe((data: any) => {
+			this.arrayCoordFromInput = data.coords;
+			console.log('data OBJECT', data);
+			const lat: any = this.arrayCoordFromInput[0];
+			const lon: any = this.arrayCoordFromInput[1];
+			this.http.loadWeather(lat, lon).subscribe((item: any) => {
+				this.temperature = item.temperature;
+				this.feelsTemp = item.feelsTemp;
+				this.minTemp = item.minTemp;
+				this.maxTemp = item.maxTemp;
+				this.pressure = item.pressure;
+				this.humidity = item.humidity;
+				this.visibility = item.visibility;
+				this.sunrise = new Date(item.sunrise * 1000).toLocaleTimeString();
+				this.sunset = new Date(item.sunset * 1000).toLocaleTimeString();
+			});
 		});
+
 	}
 
 }

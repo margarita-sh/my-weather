@@ -8,9 +8,11 @@ import { ModelGeolocation } from '../model/model.geolocation';
 @Injectable()
 export class GeolocationService {
 	private myKey: string = 'abc41fbc-7058-428f-a054-f484c95cf718';
+	private xxx: string = 'https://geocode-maps.yandex.ru/1.x/?format=json&apikey=abc41fbc-7058-428f-a054-f484c95cf718&geocode=минск';
 	public position: any;
 	public constructor(private httpClient: HttpClient) { }
 
+// браузер выдает координаты
 	public getLocation(): Observable<any> {
 		const sendResult: any = new Subject<string>();
 
@@ -25,6 +27,7 @@ export class GeolocationService {
 		return sendResult.asObservable();
 	}
 
+// получение название города по координатам браузера
 	public locationData(): Observable<any> {
 		return this.getLocation().pipe(
 			switchMap((coord: string) => {
@@ -33,6 +36,7 @@ export class GeolocationService {
 		);
 	}
 
+// название города по координатам
 	public loadLocation(coord: string): Observable<ModelGeolocation.RootObject> {
 		const url: string = `https://geocode-maps.yandex.ru/1.x/?format=json&apikey=${this.myKey}&geocode=${coord}`;
 		return this.httpClient.get(url).pipe(
@@ -41,7 +45,7 @@ export class GeolocationService {
 				this.position = arrayData[0].Point.pos.split(' ');
 				const cityName: any = arrayData.find((item: any) => {
 					const kind: string = item.metaDataProperty.GeocoderMetaData.kind;
-					 return kind === 'locality'  || kind === 'country';
+					 return kind === 'locality'  || kind === 'area';
 				});
 				if (cityName) {
 					return cityName.name;
@@ -51,14 +55,26 @@ export class GeolocationService {
 			})
 		);
 	}
-
-	public loadCoord(cityInput: string): Observable<any> {
+// по названию города из инпута выдает координаты, чтобы показывать корректно погоду
+	public loadCoordFromInput(cityInput: string): Observable<any> {
 		// tslint:disable-next-line: typedef
 		const url = `https://geocode-maps.yandex.ru/1.x/?format=json&apikey=${this.myKey}&geocode=${cityInput}`;
 		return this.httpClient.get(url).pipe(
 			map((data: ModelGeolocation.RootObject) => {
-				const arrayData: ModelGeolocation.GeoObject[] = data.response.GeoObjectCollection.featureMember.map((item: any) => item.GeoObject);
-				return arrayData[0].Point.pos.split(' ').reverse();
+				console.log('url', url);
+				const arrayData: ModelGeolocation.GeoObject[] = data.response.GeoObjectCollection.featureMember.map((item: any) => {
+					console.log('item.GeoObject', item.GeoObject);
+					return item.GeoObject;
+				});
+				console.log('arrayData', arrayData);
+				const cityName: any = arrayData.find((i: any) => {
+					const kind: string = i.metaDataProperty.GeocoderMetaData.kind;
+					 return kind === 'locality'  || kind === 'area';
+				});
+				return {
+					coords: arrayData[0].Point.pos.split(' ').reverse(),
+					town: cityName.name
+				};
 			})
 		);
 	}
