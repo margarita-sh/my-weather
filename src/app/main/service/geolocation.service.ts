@@ -8,7 +8,6 @@ import { ModelGeolocation } from '../model/model.geolocation';
 @Injectable()
 export class GeolocationService {
 	private myKey: string = 'abc41fbc-7058-428f-a054-f484c95cf718';
-	private xxx: string = 'https://geocode-maps.yandex.ru/1.x/?format=json&apikey=abc41fbc-7058-428f-a054-f484c95cf718&geocode=минск';
 	public position: any;
 	public constructor(private httpClient: HttpClient) { }
 
@@ -61,12 +60,9 @@ export class GeolocationService {
 		const url = `https://geocode-maps.yandex.ru/1.x/?format=json&apikey=${this.myKey}&geocode=${cityInput}`;
 		return this.httpClient.get(url).pipe(
 			map((data: ModelGeolocation.RootObject) => {
-				console.log('url', url);
 				const arrayData: ModelGeolocation.GeoObject[] = data.response.GeoObjectCollection.featureMember.map((item: any) => {
-					console.log('item.GeoObject', item.GeoObject);
 					return item.GeoObject;
 				});
-				console.log('arrayData', arrayData);
 				const cityName: any = arrayData.find((i: any) => {
 					const kind: string = i.metaDataProperty.GeocoderMetaData.kind;
 					 return kind === 'locality'  || kind === 'area';

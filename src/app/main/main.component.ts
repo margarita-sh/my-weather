@@ -59,8 +59,6 @@ export class MainComponent implements OnInit, OnDestroy {
 	}
 
 	public onCitySubmit(): void {
-	/* 	this.city = this.cityInput; */
-/* 	this.city ='...'; */
 		this.loadData();
 		this.geo.loadCoordFromInput(this.cityInput).subscribe((item: any) => {
 			this.mapsComponent.setMarker(item.coords);
@@ -71,7 +69,6 @@ export class MainComponent implements OnInit, OnDestroy {
 	public loadData(): void {
 		this.geo.loadCoordFromInput(this.city).subscribe((data: any) => {
 			this.arrayCoordFromInput = data.coords;
-			console.log('data OBJECT', data);
 			const lat: any = this.arrayCoordFromInput[0];
 			const lon: any = this.arrayCoordFromInput[1];
 			this.http.loadWeather(lat, lon).subscribe((item: any) => {

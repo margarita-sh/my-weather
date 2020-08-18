@@ -23,8 +23,6 @@ export class MapsComponent implements OnInit {
 	}
 
 	public setMarker(position: any): void {
-		console.log(position);
-		
 		L.marker(position).addTo(this.mymap)
 			.bindPopup('You are here')
 			.openPopup();

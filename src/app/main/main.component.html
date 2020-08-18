@@ -6,34 +6,34 @@
     </ng-container>
     <ng-container *ngIf="!loading">
         <div class="app-main--main-container">
-            <form [formGroup]=" myForm " novalidate (ngSubmit)="onCitySubmit() " class="example-form ">
+            <form [formGroup]=" myForm " novalidate (ngSubmit)="onCitySubmit()" class="example-form">
                 <div class="app-main--form-group ">
-                    <mat-form-field class="app-main--form ">
+                    <mat-form-field class="app-main--form">
                         <mat-label>City name</mat-label>
-                        <input matInput type="text " class="form-control " formControlName="cityInput" [(ngModel)]="cityInput">
+                        <input matInput type="text " class="form-control" formControlName="cityInput" [(ngModel)]="cityInput">
                         <button mat-button *ngIf="cityInput " matSuffix mat-icon-button aria-label="Clear " type="button" class=" app-main--imput-btn" (click)="cityInput=''">
 			  <mat-icon>close</mat-icon>
 			</button>
                     </mat-form-field>
                 </div>
-                <div class="app-main--section ">
-                    <div class="app-main--data ">
-                        <div class="app-main--city city ">
+                <div class="app-main--section">
+                    <div class="app-main--data">
+                        <div class="app-main--city city">
                             <p>{{city}}</p>
-                            <span class="time ">{{time | date : 'EEEE / MMMM d / HH:mm:ss'}}</span>
+                            <span class="time">{{time | date : 'EEEE / MMMM d / HH:mm:ss'}}</span>
                         </div>
-                        <div class="app-main--common-block ">
-                            <div class="app-main--temperature ">{{temperature}}°</div>
-                            <div class="app-main--general-indicators general-indicators ">
-                                <div class="indicators ">Feels Temerature: {{feelsTemp}}°</div>
-                                <div class="indicators ">min Temperature: {{minTemp}}°</div>
-                                <div class="indicators ">max Temperature: {{maxTemp}}°</div>
-                                <div class="indicators ">pressure: {{pressure}} mm</div>
-                                <div class="indicators ">humidity: {{humidity}} %</div>
-                                <div class="indicators ">visibility {{visibility}}</div>
-                                <div class="indicators ">speed: {{speed}}</div>
-                                <div class="indicators ">sunrise: {{sunrise}}</div>
-                                <div class="indicators ">sunset: {{sunset}}</div>
+                        <div class="app-main--common-block">
+                            <div class="app-main--temperature">{{temperature}}°</div>
+                            <div class="app-main--general-indicators general-indicators">
+                                <div class="indicators">Feels Temerature: {{feelsTemp}}°</div>
+                                <div class="indicators">min Temperature: {{minTemp}}°</div>
+                                <div class="indicators">max Temperature: {{maxTemp}}°</div>
+                                <div class="indicators">pressure: {{pressure}} mm</div>
+                                <div class="indicators">humidity: {{humidity}} %</div>
+                                <div class="indicators">visibility {{visibility}}</div>
+                                <div class="indicators">speed: {{speed}}</div>
+                                <div class="indicators">sunrise: {{sunrise}}</div>
+                                <div class="indicators">sunset: {{sunset}}</div>
                             </div>
                         </div>
                     </div>
