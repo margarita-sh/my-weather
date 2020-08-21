@@ -30,6 +30,7 @@ export class GeolocationService {
 	public locationData(): Observable<any> {
 		return this.getLocation().pipe(
 			switchMap((coord: string) => {
+				console.log('coord', coord);
 				return this.loadLocation(coord);
 			})
 		);

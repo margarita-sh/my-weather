@@ -14,6 +14,13 @@ import {MatIconModule} from '@angular/material/icon';
 import { MapsComponent } from './maps/maps.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { ImgService } from './main/service/img.service';
+import { StoreModule } from '@ngrx/store';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { reducer } from './store';
+import { EffectsModule } from '@ngrx/effects';
+import { GeoEffects } from './store/effects/geo.effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 @NgModule({
 	declarations: [
@@ -30,6 +37,10 @@ import { ImgService } from './main/service/img.service';
 		MatInputModule,
 		MatIconModule,
 		MatProgressSpinnerModule,
+		StoreModule.forRoot(reducer),
+		StoreRouterConnectingModule.forRoot(),
+		EffectsModule.forRoot([GeoEffects]),
+		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
 	],
 	providers: [WeatherService, GeolocationService, ImgService],
 	bootstrap: [AppComponent]

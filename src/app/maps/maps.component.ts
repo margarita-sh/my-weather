@@ -8,8 +8,6 @@ import { GeolocationService } from '../main/service/geolocation.service';
 	styleUrls: ['./maps.component.scss']
 })
 export class MapsComponent implements OnInit {
-	private myKey: string = '5211abf32aeba9a166b91f5e2bba0e49';
-
 	public mymap: any;
 	public positionLeaflet: any = this.pos.position.map((item: any) => Number(item)).reverse();
 
