@@ -4,36 +4,37 @@ import { mergeMap, map } from 'rxjs/operators';
 import { Observable, of, } from 'rxjs';
 import { TypedAction } from '@ngrx/store/src/models';
 import { GeolocationService } from '../../main/service/geolocation.service';
-import { getDataFromBrowserAPI, setCityFromBrowserAPI } from '../actions/geo.action';
+import { getDataFromBrowserAPI, setCityFromBrowserAPI, getDataFromYandexAPI, CustomGeoAction, setCityFromYandexAPI } from '../actions/geo.action';
 
 @Injectable()
 export class GeoEffects {
-	public getDataFromBrowserAPI$: Observable<TypedAction<string>> = createEffect(
+	public setCityFromBrowserAPI$: Observable<TypedAction<string>> = createEffect(
 		() => this.actions$.pipe(
 			ofType(getDataFromBrowserAPI),
 			mergeMap(() => this.geoService.locationData()
 				.pipe(
 					map((city: any) => {
-						console.log('effect', city);
 						return setCityFromBrowserAPI({ city });
 					})
 				)
 			)
 		)
 	);
-	/* public saveProfileUser$: Observable<TypedAction<string>> = createEffect(
+	 public setCityFromInput$: Observable<TypedAction<string>> = createEffect(
 		() => this.actions$.pipe(
-			ofType(saveProfileUser),
-			mergeMap((action: CustomAction) => of(this.profileService.saveProfile(action.profile.nickname, action.profile.id))
+			ofType(getDataFromYandexAPI),
+			mergeMap((action: CustomGeoAction) => this.geoService.loadCoordFromInput(action.cityInput)
 				.pipe(
-					map(() => {
-						return getProfileUserFromLS({});
+					map((data: any) => {
+						console.log('data EFFECT', data);
+					/* 	const city: string = data.town; */
+						return setCityFromYandexAPI({data});
 					})
 				)
 			)
 		)
 	);
-
+/*
 	public getProfileUserFromLS$: Observable<TypedAction<string>> = createEffect(
 		() => this.actions$.pipe(
 			ofType(getProfileUserFromLS),

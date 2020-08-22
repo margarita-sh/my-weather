@@ -6,7 +6,7 @@
     </ng-container>
     <ng-container *ngIf="!loading">
         <div class="app-main--main-container">
-            <form [formGroup]=" myForm " novalidate (ngSubmit)="onCitySubmit()" class="example-form">
+            <form [formGroup]=" myForm " novalidate (ngSubmit)="onCitySubmit(cityInput)" class="example-form">
                 <div class="app-main--form-group ">
                     <mat-form-field class="app-main--form">
                         <mat-label>City name</mat-label>
@@ -34,6 +34,7 @@
                                 <div class="indicators">speed: {{speed}}</div>
                                 <div class="indicators">sunrise: {{sunrise}}</div>
                                 <div class="indicators">sunset: {{sunset}}</div>
+                                <div class="indicators">xxx: {{ (xxx$ | async).town }}</div>
                             </div>
                         </div>
                     </div>

@@ -7,8 +7,8 @@ import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { MapsComponent } from '../maps/maps.component';
 import { ImgService } from './service/img.service';
 import { Store, select } from '@ngrx/store';
-import { getDataFromBrowserAPI } from '../store/actions/geo.action';
-import { selectCity } from '../store/selectors/geo.selectors';
+import { getDataFromBrowserAPI, getDataFromYandexAPI } from '../store/actions/geo.action';
+import { selectCity, selectCityInput } from '../store/selectors/geo.selectors';
 
 @Component({
 	selector: 'app-main',
@@ -23,7 +23,6 @@ export class MainComponent implements OnInit, OnDestroy {
 	public strokeWidth: number = 10;
 	public diameter: number = 100;
 	public myForm: FormGroup;
-/* 	public city: any; */
 	public temperature: number;
 	public feelsTemp: number;
 	public minTemp: number;
@@ -37,10 +36,11 @@ export class MainComponent implements OnInit, OnDestroy {
 	public location: string;
 	public subscription: Subscription;
 	public time: Date = new Date();
-	public cityInput: string = '';
+/* 	public cityInput: string = ''; */
 	public srcImg: string = '';
 	public arrayCoordFromInput: any;
 	public city$: Observable<string> = this._store$.pipe(select(selectCity));
+ 	public xxx$: Observable<any> = this._store$.pipe(select(selectCityInput));
 
 
 	constructor(private http: WeatherService, private geo: GeolocationService, private linkImg: ImgService, private _store$: Store) {
@@ -56,18 +56,26 @@ export class MainComponent implements OnInit, OnDestroy {
 		this._store$.dispatch(getDataFromBrowserAPI({}));
 		this.loading = true;
 		this.linkImg.loadImg().subscribe((data: any) => this.srcImg = data);
-/* 		this.subscription = this.geo.locationData().subscribe((item: any) => {
-			this.city = item;
-			this.loadData(this.city);
+		this.subscription = this.city$.subscribe((item: any) => {
+			if (!item) {
+				return;
+			}
+			this.loadData(item);
 			this.loading = false;
-		}); */
-	}
-	public onCitySubmit(): void {
-		this.geo.loadCoordFromInput(this.cityInput).subscribe((item: any) => {
-			this.mapsComponent.setMarker(item.coords);
-		    this.city = item.town;
-			this.loadData(this.cityInput);
 		});
+	}
+
+	public onCitySubmit(cityInput: string): void {
+		console.log('cityInput', cityInput);
+		this._store$.dispatch(getDataFromYandexAPI({cityInput}));
+		console.log('XXX$', this.xxx$);
+		console.log('CITY$', this.city$);
+		/* this.xxx = this._store$.pipe(select(selectCityInput)); */
+	/* 	this.geo.loadCoordFromInput(this.cityInput).subscribe((item: any) => {
+			this.mapsComponent.setMarker(item.coords);
+			 this.city = item.town;
+			this.loadData(this.cityInput);
+		}); */
 	}
 
 	public loadData(city: string): void {
