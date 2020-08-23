@@ -14,7 +14,7 @@ export const geoReducer: ActionReducer<GeoState, Action> = createReducer(
  	on(GeoAction.setCityFromYandexAPI, (state: GeoState, action: GeoAction.CustomGeoAction): GeoState => {
 		return ({
 			...state,
-			data: action.data
+			city: action.data.town
 		});
 	})
 );

@@ -40,7 +40,7 @@ export class MainComponent implements OnInit, OnDestroy {
 	public srcImg: string = '';
 	public arrayCoordFromInput: any;
 	public city$: Observable<string> = this._store$.pipe(select(selectCity));
- 	public xxx$: Observable<any> = this._store$.pipe(select(selectCityInput));
+ 	//public xxx$: Observable<any> = this._store$.pipe(select(selectCityInput));
 
 
 	constructor(private http: WeatherService, private geo: GeolocationService, private linkImg: ImgService, private _store$: Store) {
@@ -66,16 +66,14 @@ export class MainComponent implements OnInit, OnDestroy {
 	}
 
 	public onCitySubmit(cityInput: string): void {
-		console.log('cityInput', cityInput);
 		this._store$.dispatch(getDataFromYandexAPI({cityInput}));
-		console.log('XXX$', this.xxx$);
-		console.log('CITY$', this.city$);
+/* 			this.city$ = this.xxx$; */
 		/* this.xxx = this._store$.pipe(select(selectCityInput)); */
-	/* 	this.geo.loadCoordFromInput(this.cityInput).subscribe((item: any) => {
+		/* this.geo.loadCoordFromInput(cityInput).subscribe((item: any) => {
 			this.mapsComponent.setMarker(item.coords);
 			 this.city = item.town;
-			this.loadData(this.cityInput);
-		}); */
+			 this.loadData(this.cityInput);
+		});*/
 	}
 
 	public loadData(city: string): void {
