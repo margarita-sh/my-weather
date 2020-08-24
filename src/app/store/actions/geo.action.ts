@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { ActionCreator, NotAllowedCheck, TypedAction } from '@ngrx/store/src/models';
-import {  Action } from '@ngrx/store';
+import { Action } from '@ngrx/store';
 
 type TypeActionCreator<S extends string, O extends object> = ActionCreator<
 	S, (props: O & NotAllowedCheck<O>) => & TypedAction<S>
@@ -13,13 +13,24 @@ export interface CustomGeoAction extends Action {
 		coords: [],
 		town: string
 	};
+	weather: {
+		temperature: number,
+		feelsTemp: number,
+		minTemp: number,
+		maxTemp: number,
+		pressure: number,
+		humidity: number,
+		visibility: number,
+		sunrise: number,
+		sunset: number,
+	};
 
 }
 export const getDataFromBrowserAPI: TypeActionCreator <string, {}> = createAction(
 	'[GEO] get data from Browser API',
   );
 
-export const setCityFromBrowserAPI: TypeActionCreator <string, {city: string}> = createAction(
+ export const setCityFromBrowserAPI: TypeActionCreator <string, {city: string}> = createAction(
 	'[GEO] set city from Browser coords API',
 	props<{city: string}>()
   );
@@ -29,7 +40,7 @@ export const getDataFromYandexAPI: TypeActionCreator <string, {cityInput: string
 	props<{cityInput: string}>()
   );
 
-export const setCityFromYandexAPI: TypeActionCreator <string, {data: object}> = createAction(
+export const setDataFromYandexAPI: TypeActionCreator <string, {data: object, weather: object}> = createAction(
 	'[GEO] set data from yandex API',
-	props<{data: object}>()
+	props<{data: object, weather: object}>()
   );

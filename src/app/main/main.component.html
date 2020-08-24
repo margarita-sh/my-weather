@@ -23,18 +23,17 @@
                             <span class="time">{{time | date : 'EEEE / MMMM d / HH:mm:ss'}}</span>
                         </div>
                         <div class="app-main--common-block">
-                            <div class="app-main--temperature">{{temperature}}°</div>
+                            <div class="app-main--temperature">{{ (weather$ | async).temperature }}°</div>
                             <div class="app-main--general-indicators general-indicators">
-                                <div class="indicators">Feels Temerature: {{feelsTemp}}°</div>
-                                <div class="indicators">min Temperature: {{minTemp}}°</div>
-                                <div class="indicators">max Temperature: {{maxTemp}}°</div>
-                                <div class="indicators">pressure: {{pressure}} mm</div>
-                                <div class="indicators">humidity: {{humidity}} %</div>
-                                <div class="indicators">visibility {{visibility}}</div>
-                                <div class="indicators">speed: {{speed}}</div>
-                                <div class="indicators">sunrise: {{sunrise}}</div>
-                                <div class="indicators">sunset: {{sunset}}</div>
-                                <!--     <div class="indicators">xxx: {{ (xxx$ | async).town }}</div> -->
+                                <div class="indicators">Feels Temerature: {{ (weather$ | async).temperature }}°</div>
+                                <div class="indicators">min Temperature: {{ (weather$ | async).minTemp }}°</div>
+                                <div class="indicators">max Temperature: {{ (weather$ | async).maxTemp }}°</div>
+                                <div class="indicators">pressure: {{ (weather$ | async).pressure }} mm</div>
+                                <div class="indicators">humidity: {{ (weather$ | async).humidity }} %</div>
+                                <div class="indicators">visibility {{ (weather$ | async).visibility }}</div>
+                                <div class="indicators">speed: {{ (weather$ | async).speed }}</div>
+                                <div class="indicators">sunrise: {{ (weather$ | async).sunrise }}</div>
+                                <div class="indicators">sunset: {{ (weather$ | async).sunset }}</div>
                             </div>
                         </div>
                     </div>

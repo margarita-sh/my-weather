@@ -11,8 +11,8 @@ export class WeatherData {
 	public humidity: number;
 	public visibility: number;
 	public speed: number;
-	public sunrise: number;
-	public sunset: number;
+	public sunrise: string;
+	public sunset: string;
 
 	public parseModel(data: ModelAPI.WeatherAPI): void {
 		this.temperature = Math.round(data.main.temp - this.conversionDegrees);
@@ -23,7 +23,7 @@ export class WeatherData {
 		this.humidity =  data.main.humidity;
 		this.visibility = data.visibility;
 		this.speed = data.wind.speed;
-		this.sunrise = data.sys.sunrise;
-		this.sunset = data.sys.sunset;
+		this.sunrise = new Date(data.sys.sunrise * 1000).toLocaleTimeString();
+		this.sunset = new Date(data.sys.sunset * 1000).toLocaleTimeString();
 	}
 }

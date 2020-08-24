@@ -14,7 +14,6 @@ export class ImgEffects {
 			mergeMap(() => this.imgService.loadImg()
 				.pipe(
 					map((srcImg: string) => {
-						console.log('sssss', srcImg);
 						return setBackgroundImgFromAPI({srcImg});
 					})
 				)

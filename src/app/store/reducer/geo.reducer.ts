@@ -4,17 +4,18 @@ import { GeoState, initialState } from '../state/geo.state';
 
 export const geoReducer: ActionReducer<GeoState, Action> = createReducer(
 	initialState,
-	on(GeoAction.setCityFromBrowserAPI, (state: GeoState, action: GeoAction.CustomGeoAction): GeoState => {
+ 	on(GeoAction.setCityFromBrowserAPI, (state: GeoState, action: GeoAction.CustomGeoAction): GeoState => {
 		return ({
 			...state,
 			city: action.city
 		});
 	}),
 
- 	on(GeoAction.setCityFromYandexAPI, (state: GeoState, action: GeoAction.CustomGeoAction): GeoState => {
+ 	on(GeoAction.setDataFromYandexAPI, (state: GeoState, action: GeoAction.CustomGeoAction): GeoState => {
 		return ({
 			...state,
-			city: action.data.town
+			city: action.data.town,
+			weather: action.weather
 		});
 	})
 );

@@ -4,7 +4,8 @@ import { mergeMap, map } from 'rxjs/operators';
 import { Observable, of, } from 'rxjs';
 import { TypedAction } from '@ngrx/store/src/models';
 import { GeolocationService } from '../../main/service/geolocation.service';
-import { getDataFromBrowserAPI, setCityFromBrowserAPI, getDataFromYandexAPI, CustomGeoAction, setCityFromYandexAPI } from '../actions/geo.action';
+import { getDataFromBrowserAPI, setCityFromBrowserAPI, getDataFromYandexAPI, CustomGeoAction, setDataFromYandexAPI } from '../actions/geo.action';
+import { WeatherService } from '../../main/service/api.weather.service';
 
 @Injectable()
 export class GeoEffects {
@@ -20,36 +21,31 @@ export class GeoEffects {
 			)
 		)
 	);
-	 public setCityFromInput$: Observable<TypedAction<string>> = createEffect(
+	public setCityFromInput$: Observable<TypedAction<string>> = createEffect(
 		() => this.actions$.pipe(
 			ofType(getDataFromYandexAPI),
 			mergeMap((action: CustomGeoAction) => this.geoService.loadCoordFromInput(action.cityInput)
 				.pipe(
 					map((data: any) => {
 						console.log('data EFFECT', data);
-					/* 	const city: string = data.town; */
-						return setCityFromYandexAPI({data});
-					})
+						return data;
+					}),
+					mergeMap((data: any) => this.weatherService.loadWeather(data.coords[0], data.coords[1])
+						.pipe(
+							map((weather: any) => {
+								console.log('data EFFECT 222', weather);
+								return setDataFromYandexAPI({ data, weather });
+							})
+						)
+					)
 				)
 			)
 		)
 	);
-/*
-	public getProfileUserFromLS$: Observable<TypedAction<string>> = createEffect(
-		() => this.actions$.pipe(
-			ofType(getProfileUserFromLS),
-			mergeMap(() => of(this.profileService.getProfileFromLS())
-				.pipe(
-					map((profile: Profile) => {
-						return setProfileUser({ profile });
-					})
-				)
-			)
-		)
-	); */
 
 	constructor(
 		private actions$: Actions,
-		private geoService: GeolocationService
+		private geoService: GeolocationService,
+		private weatherService: WeatherService
 	) { }
 }

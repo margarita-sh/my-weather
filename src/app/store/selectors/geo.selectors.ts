@@ -8,7 +8,12 @@ export const selectCity: any = createSelector(
 	(state: GeoState): string => state.city
 );
 
-export const selectCityInput: any = createSelector(
+export const selectWeather: any = createSelector(
+	selectGeoFeature,
+	(state: GeoState) => state.weather
+);
+
+/* export const selectWeather: any = createSelector(
 	selectGeoFeature,
 	(state: GeoState) => state.data
-);
+); */

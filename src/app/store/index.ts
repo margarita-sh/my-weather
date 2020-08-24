@@ -11,5 +11,5 @@ export interface IAppState {
 
 export const reducer: ActionReducerMap<IAppState> = {
 	[featureKeyGeoLocation]: StateReducerGeo,
-	[featureKeySrcImg]: StateReducerSrcImg
+	[featureKeySrcImg]: StateReducerSrcImg,
 };
