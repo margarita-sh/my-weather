@@ -1,4 +1,4 @@
-<div class="app-main" [ngStyle]="{ 'background-image': 'url(' + srcImg + ')'}">
+<div class="app-main" [ngStyle]="{ 'background-image': 'url(' + (srcImg$ | async) + ')'}">
     <ng-container *ngIf="loading">
         <div class="app-main--loading">
             <mat-spinner [mode]="mode" [value]="valueProgressSpinner" aria-label="showText" [strokeWidth]="strokeWidth" [diameter]="diameter"></mat-spinner>

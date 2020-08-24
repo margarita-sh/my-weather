@@ -21,6 +21,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { GeoEffects } from './store/effects/geo.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import { ImgEffects } from './store/effects/img.effects';
 
 @NgModule({
 	declarations: [
@@ -39,7 +40,7 @@ import { environment } from '../environments/environment';
 		MatProgressSpinnerModule,
 		StoreModule.forRoot(reducer),
 		StoreRouterConnectingModule.forRoot(),
-		EffectsModule.forRoot([GeoEffects]),
+		EffectsModule.forRoot([GeoEffects, ImgEffects]),
 		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
 	],
 	providers: [WeatherService, GeolocationService, ImgService],

@@ -9,22 +9,25 @@ import { GeolocationService } from '../main/service/geolocation.service';
 })
 export class MapsComponent implements OnInit {
 	public mymap: any;
-	//public positionLeaflet: any = this.pos.position.map((item: any) => Number(item)).reverse();
-	public positionLeaflet: any;
+	public positionLeaflet: any = this.pos.position.map((item: any) => Number(item)).reverse();
 
 	constructor(private pos: GeolocationService) { }
 	public ngOnInit(): void {
-		/*this.mymap = L.map('mapid').setView(this.positionLeaflet, 13);
+		this.mymap = L.map('mapid').setView(this.positionLeaflet, 13);
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 		}).addTo(this.mymap);
-		this.setMarker(this.positionLeaflet);*/
+		this.setMarker(this.positionLeaflet);
 	}
 
 	public setMarker(position: any): void {
-		L.marker(position).addTo(this.mymap)
+	    L.marker(position).addTo(this.mymap)
 			.bindPopup('You are here')
-			.openPopup();
+			 .openPopup();
+			/*  L.popup()
+			 .setLatLng(position)
+			 .setContent('<p>Hello world!<br />This is a nice popup.</p>')
+			 .openOn(this.mymap); */
 	}
 
 }

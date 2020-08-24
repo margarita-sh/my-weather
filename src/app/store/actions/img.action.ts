@@ -7,14 +7,14 @@ type TypeActionCreator<S extends string, O extends object> = ActionCreator<
 >;
 
 export interface CustomImgAction extends Action {
-   src: string;
+   srcImg: string;
 
 }
 export const getImgFromAPI: TypeActionCreator <string, {}> = createAction(
 	'[IMG] get img from API',
   );
 
-export const setBackgroundImgFromAPI: TypeActionCreator <string, {src: string}> = createAction(
-	'[GEO] set city from Browser coords API',
-	props<{src: string}>()
+export const setBackgroundImgFromAPI: TypeActionCreator <string, {srcImg: string}> = createAction(
+	'[GEO] set backgroundImg from API',
+	props<{srcImg: string}>()
   );
