@@ -20,12 +20,13 @@
                     <div class="app-main--data">
                         <div class="app-main--city city">
                             <p>{{city$ | async}}</p>
-                            <span class="time">{{time | date : 'EEEE / MMMM d / HH:mm:ss'}}</span>
+							<!-- <span class="time">{{time| date : 'EEEE / MMMM d / HH:mm:ss'}}</span> -->
+							<span> {{ selectTime$ | async }} </span>
                         </div>
                         <div class="app-main--common-block">
                             <div class="app-main--temperature">{{ (weather$ | async).temperature }}°</div>
                             <div class="app-main--general-indicators general-indicators">
-                                <div class="indicators">Feels Temerature: {{ (weather$ | async).temperature }}°</div>
+                                <div class="indicators">feels Temerature: {{ (weather$ | async).temperature }}°</div>
                                 <div class="indicators">min Temperature: {{ (weather$ | async).minTemp }}°</div>
                                 <div class="indicators">max Temperature: {{ (weather$ | async).maxTemp }}°</div>
                                 <div class="indicators">pressure: {{ (weather$ | async).pressure }} mm</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import { WeatherService } from './service/api.weather.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { GeolocationService } from './service/geolocation.service';
@@ -7,8 +7,8 @@ import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { MapsComponent } from '../maps/maps.component';
 import { ImgService } from './service/img.service';
 import { Store, select } from '@ngrx/store';
-import { getDataFromBrowserAPI, getDataFromYandexAPI } from '../store/actions/geo.action';
-import { selectCity, selectWeather } from '../store/selectors/geo.selectors';
+import { getDataFromBrowserAPI, getDataFromYandexAPI, updateTime } from '../store/actions/geo.action';
+import { selectCity, selectWeather, selectTime } from '../store/selectors/geo.selectors';
 import { getImgFromAPI } from '../store/actions/img.action';
 import { selectSrcImg } from '../store/selectors/img.selectors';
 import { map } from 'leaflet';
@@ -26,30 +26,22 @@ export class MainComponent implements OnInit, OnDestroy {
 	public strokeWidth: number = 10;
 	public diameter: number = 100;
 	public myForm: FormGroup;
-	public temperature: number;
-	public feelsTemp: number;
-	public minTemp: number;
-	public maxTemp: number;
-	public pressure: number;
-	public humidity: number;
-	public visibility: number;
-	public speed: number;
-	public sunrise: string;
-	public sunset: string;
 	public location: string;
 	public subscription: Subscription;
-	public time: Date = new Date();
+	//public time: Date = new Date();
 	public srcImg: string = '';
 	public arrayCoordFromInput: any;
 	public city$: Observable<string> = this._store$.pipe(select(selectCity));
 	public srcImg$: Observable<string> = this._store$.pipe(select(selectSrcImg));
 	public weather$: Observable<string> = this._store$.pipe(select(selectWeather));
+	public selectTime$: Observable<string> = this._store$.pipe(select(selectTime));
 
 	constructor(private http: WeatherService, private geo: GeolocationService, private linkImg: ImgService, private _store$: Store) {
 		this.myForm = new FormGroup({
 			cityInput: new FormControl(),
 		});
 	}
+
 	public ngOnDestroy(): void {
 		this.subscription.unsubscribe();
 	}
@@ -64,6 +56,7 @@ export class MainComponent implements OnInit, OnDestroy {
 			}
 			this.loadData(item);
 			this.loading = false;
+			this._store$.dispatch(updateTime({}));
 		});
 	}
 

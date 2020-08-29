@@ -22,6 +22,7 @@ import { GeoEffects } from './store/effects/geo.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { ImgEffects } from './store/effects/img.effects';
+import { TimeService } from './main/service/time.service';
 
 @NgModule({
 	declarations: [
@@ -43,7 +44,7 @@ import { ImgEffects } from './store/effects/img.effects';
 		EffectsModule.forRoot([GeoEffects, ImgEffects]),
 		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
 	],
-	providers: [WeatherService, GeolocationService, ImgService],
+	providers: [WeatherService, GeolocationService, ImgService, TimeService],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

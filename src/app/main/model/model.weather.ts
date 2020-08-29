@@ -13,6 +13,7 @@ export class WeatherData {
 	public speed: number;
 	public sunrise: string;
 	public sunset: string;
+	public timezone: number;
 
 	public parseModel(data: ModelAPI.WeatherAPI): void {
 		this.temperature = Math.round(data.main.temp - this.conversionDegrees);
@@ -25,5 +26,6 @@ export class WeatherData {
 		this.speed = data.wind.speed;
 		this.sunrise = new Date(data.sys.sunrise * 1000).toLocaleTimeString();
 		this.sunset = new Date(data.sys.sunset * 1000).toLocaleTimeString();
+		this.timezone =  data.timezone;
 	}
 }

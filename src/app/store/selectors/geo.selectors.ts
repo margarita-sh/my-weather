@@ -13,7 +13,8 @@ export const selectWeather: any = createSelector(
 	(state: GeoState) => state.weather
 );
 
-/* export const selectWeather: any = createSelector(
+  export const selectTime: any = createSelector(
 	selectGeoFeature,
-	(state: GeoState) => state.data
-); */
+	(state: GeoState) => state.time
+);
+

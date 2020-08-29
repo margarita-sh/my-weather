@@ -13,6 +13,7 @@ export interface CustomGeoAction extends Action {
 		coords: [],
 		town: string
 	};
+	time: string;
 	weather: {
 		temperature: number,
 		feelsTemp: number,
@@ -23,6 +24,7 @@ export interface CustomGeoAction extends Action {
 		visibility: number,
 		sunrise: number,
 		sunset: number,
+		timezone: number
 	};
 
 }
@@ -44,3 +46,10 @@ export const setDataFromYandexAPI: TypeActionCreator <string, {data: object, wea
 	'[GEO] set data from yandex API',
 	props<{data: object, weather: object}>()
   );
+export const updateTime: TypeActionCreator <string, {}> = createAction(
+	'[TIME] update time',
+);
+export const setTime: TypeActionCreator <string, {time: string}> = createAction(
+	'[TIME] set time',
+	props<{time: string}>()
+);

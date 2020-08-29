@@ -4,6 +4,7 @@
     background-size: cover;
     width: 100vw;
     height: 100vh;
+    z-index: -1;
     &--loading {
         display: flex;
         justify-content: center;
@@ -13,24 +14,28 @@
     }
     &--form-group {
         display: flex;
-        opacity: 0.6;
-        background: white;
+        background: rgb(255, 255, 255, 0.6);
         flex-direction: row-reverse;
         justify-content: space-between;
         width: 100%;
         margin-bottom: 2em;
+        padding: 0.5em;
+        position: relative;
+        height: 4em;
+        z-index: 1;
     }
     &--form {
         width: 25em;
-        padding: .5em 2em;
+        position: absolut;
+        right: 2.5em;
+        z-index: 2;
     }
     &--city {
         width: 100%;
         border-radius: 1em;
         font-size: 2.2em;
-        opacity: 0.6;
+        background: rgb(255, 255, 255, 0.6);
         line-height: .8em;
-        background: white;
         padding: 1em;
         box-sizing: inherit;
         .time {
@@ -51,10 +56,9 @@
         border-radius: 1em;
         padding: 1.5em;
         font-size: 1.2em;
-        background: white;
+        background: rgb(255, 255, 255, 0.6);
         width: 100%;
         margin-top: 2em;
-        opacity: 0.6;
         box-sizing: inherit;
     }
     &--general-indicators {
@@ -67,6 +71,7 @@
         padding: 0 2em;
         height: 70vh;
         overflow: hidden;
+        margin-top: 2em;
     }
     &--data {
         width: 50%;

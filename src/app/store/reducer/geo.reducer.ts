@@ -17,6 +17,13 @@ export const geoReducer: ActionReducer<GeoState, Action> = createReducer(
 			city: action.data.town,
 			weather: action.weather
 		});
+	}),
+
+	on(GeoAction.setTime, (state: GeoState, action: GeoAction.CustomGeoAction): GeoState => {
+		return ({
+			...state,
+			time: action.time,
+		});
 	})
 );
 

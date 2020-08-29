@@ -1,6 +1,7 @@
 export interface GeoState {
 	city: string;
 	cityInput: string;
+	time: string;
 	data: {
 		coords: [],
 		town: string
@@ -38,5 +39,6 @@ export const initialState: GeoState = {
 		visibility: null,
 		sunrise: null,
 		sunset: null
-	}
+	},
+	time: '',
 };
