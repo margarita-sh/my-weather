@@ -53,7 +53,7 @@ export class GeoEffects {
 				.pipe(
 					map((data: any) => {
 						console.log(data);
-						
+
 						return data.timezone;
 					}),
 					mergeMap((data: any) => of(this.timeService.getCuttentTime(data))
