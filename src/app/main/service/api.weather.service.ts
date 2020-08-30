@@ -16,7 +16,7 @@ export class WeatherService {
 			map((data: ModelAPI.WeatherAPI) => {
 				const weatherData: WeatherData = new WeatherData();
 				weatherData.parseModel(data);
-				console.log('answer', weatherData);
+				console.log('answerWEATHER', weatherData);
 				return weatherData;
 			})
 		);

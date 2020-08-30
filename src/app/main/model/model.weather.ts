@@ -26,6 +26,6 @@ export class WeatherData {
 		this.speed = data.wind.speed;
 		this.sunrise = new Date(data.sys.sunrise * 1000).toLocaleTimeString();
 		this.sunset = new Date(data.sys.sunset * 1000).toLocaleTimeString();
-		this.timezone =  data.timezone;
+		this.timezone =  data.timezone * 1000;
 	}
 }

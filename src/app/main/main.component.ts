@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { WeatherService } from './service/api.weather.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { GeolocationService } from './service/geolocation.service';
@@ -11,7 +11,6 @@ import { getDataFromBrowserAPI, getDataFromYandexAPI, updateTime } from '../stor
 import { selectCity, selectWeather, selectTime } from '../store/selectors/geo.selectors';
 import { getImgFromAPI } from '../store/actions/img.action';
 import { selectSrcImg } from '../store/selectors/img.selectors';
-import { map } from 'leaflet';
 
 @Component({
 	selector: 'app-main',
@@ -21,14 +20,15 @@ import { map } from 'leaflet';
 export class MainComponent implements OnInit, OnDestroy {
 	@ViewChild(MapsComponent, { static: false })
 	private mapsComponent: MapsComponent;
+	private intervalTime: any;
 	public loading: boolean = false;
 	public mode: ProgressSpinnerMode = 'indeterminate';
 	public strokeWidth: number = 10;
 	public diameter: number = 100;
 	public myForm: FormGroup;
 	public location: string;
-	public subscription: Subscription;
-	//public time: Date = new Date();
+	public citySubscription: Subscription;
+	public weatherSubscription: Subscription;
 	public srcImg: string = '';
 	public arrayCoordFromInput: any;
 	public city$: Observable<string> = this._store$.pipe(select(selectCity));
@@ -43,32 +43,40 @@ export class MainComponent implements OnInit, OnDestroy {
 	}
 
 	public ngOnDestroy(): void {
-		this.subscription.unsubscribe();
+		this.citySubscription.unsubscribe();
+		this.weatherSubscription.unsubscribe();
 	}
 
 	public ngOnInit(): void {
 		this._store$.dispatch(getDataFromBrowserAPI({}));
 		this._store$.dispatch(getImgFromAPI({}));
 		this.loading = true;
-		this.subscription = this.city$.subscribe((item: any) => {
+		this.citySubscription = this.city$.subscribe((item: any) => {
 			if (!item) {
 				return;
 			}
 			this.loadData(item);
 			this.loading = false;
-			this._store$.dispatch(updateTime({}));
 		});
+		this.weatherSubscription = this.weather$.subscribe((item: any) => {
+			if (!item.timezone) {
+				return;
+			}
+			clearInterval(this.intervalTime);
+			this.intervalTime = setInterval(() => this._store$.dispatch(updateTime({})), 1000);
+		});
+
 	}
 
 	public onCitySubmit(cityInput: string): void {
-		this._store$.dispatch(getDataFromYandexAPI({cityInput}));
-		 this.geo.loadCoordFromInput(cityInput).subscribe((item: any) => {
+		this._store$.dispatch(getDataFromYandexAPI({ cityInput }));
+		this.geo.loadCoordFromInput(cityInput).subscribe((item: any) => {
 			this.mapsComponent.setMarker(item.coords);
 		});
 	}
 
 	public loadData(cityInput: string): void {
-		this._store$.dispatch(getDataFromYandexAPI({cityInput}));
+		this._store$.dispatch(getDataFromYandexAPI({ cityInput }));
 	}
 
 }

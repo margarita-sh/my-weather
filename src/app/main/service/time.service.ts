@@ -4,19 +4,23 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class TimeService {
 
-	public getCuttentTime(offset: number): string {
-		console.log(offset);
-		  // create Date object for current location
-		  const localTime: Date = new Date();
+	public getCuttentTime(offset: number): any {
+		if(offset === 0){
+			return;
+		}
+		/*  const localTime: Date = new Date();
 
-		  const utc: any = localTime.getTime() + (localTime.getTimezoneOffset() / 60000);
-	  
-		  // create new Date object for different city
-		  // using supplied offset
-		  const needTime: any = new Date(utc + (offset/3600000));
-	  
-		  // return time as a string
-		  return needTime.toLocaleString();
+		 const utc: any = localTime.getTime() + (localTime.getTimezoneOffset() / 60000);
+		 const needTime: any = new Date(utc + (offset/3600000));
+		 // return time as a string
+		 return needTime.toLocaleString(); */
+		const currentDate: Date = new Date(Date.now() + offset);
+		const day: number = currentDate.getDate();
+		const dayOfWeek: number = currentDate.getDay();
+		const month: number = currentDate.getMonth();
+		const hour: number = currentDate.getHours();
+		const min: number = currentDate.getMinutes();
+		const sec: number = currentDate.getSeconds();
+		return `${dayOfWeek}, ${day} ${month}, ${hour}: ${min}: ${sec}`;
 	}
-};
-
+}

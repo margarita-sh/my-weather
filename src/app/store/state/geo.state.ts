@@ -15,7 +15,8 @@ export interface GeoState {
 		humidity: number,
 		visibility: number,
 		sunrise: number,
-		sunset: number
+		sunset: number,
+		timezone: number
 	};
 
 }
@@ -38,7 +39,8 @@ export const initialState: GeoState = {
 		humidity: null,
 		visibility: null,
 		sunrise: null,
-		sunset: null
+		sunset: null,
+		timezone: null
 	},
 	time: '',
 };
