@@ -20,21 +20,20 @@
                     <div class="app-main--data">
                         <div class="app-main--city city">
                             <p>{{city$ | async}}</p>
-							<!-- <span class="time">{{time| date : 'EEEE / MMMM d / HH:mm:ss'}}</span> -->
-							<span> {{ selectTime$ | async }} </span>
+							<span class="time"> {{ selectTime$ | async | date : 'MMM d, y, h:mm:ss'}} </span> 
                         </div>
                         <div class="app-main--common-block">
                             <div class="app-main--temperature">{{ (weather$ | async).temperature }}°</div>
                             <div class="app-main--general-indicators general-indicators">
-                                <div class="indicators">feels Temerature: {{ (weather$ | async).temperature }}°</div>
-                                <div class="indicators">min Temperature: {{ (weather$ | async).minTemp }}°</div>
-                                <div class="indicators">max Temperature: {{ (weather$ | async).maxTemp }}°</div>
-                                <div class="indicators">pressure: {{ (weather$ | async).pressure }} mm</div>
-                                <div class="indicators">humidity: {{ (weather$ | async).humidity }} %</div>
-                                <div class="indicators">visibility {{ (weather$ | async).visibility }}</div>
-                                <div class="indicators">speed: {{ (weather$ | async).speed }}</div>
-                                <div class="indicators">sunrise: {{ (weather$ | async).sunrise }}</div>
-                                <div class="indicators">sunset: {{ (weather$ | async).sunset }}</div>
+                                <div class="indicators">ощущается как: {{ (weather$ | async).temperature }}°</div>
+                                <div class="indicators">мин. температура: {{ (weather$ | async).minTemp }}°</div>
+                                <div class="indicators">макс. температура: {{ (weather$ | async).maxTemp }}°</div>
+                                <div class="indicators">давление: {{ (weather$ | async).pressure }} мм рт.ст</div>
+                                <div class="indicators">влажность: {{ (weather$ | async).humidity }} %</div>
+                                <div class="indicators">видимость {{ (weather$ | async).visibility }} м</div>
+                                <div class="indicators">скорость ветра: {{ (weather$ | async).speed }} м/с</div>
+                                <div class="indicators">рассвет: {{ (weather$ | async).sunrise }}</div>
+                                <div class="indicators">закат: {{ (weather$ | async).sunset }}</div>
                             </div>
                         </div>
                     </div>

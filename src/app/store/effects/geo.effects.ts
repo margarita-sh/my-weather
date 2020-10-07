@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ofType, createEffect, Actions } from '@ngrx/effects';
-import { mergeMap, map, withLatestFrom, concatMap } from 'rxjs/operators';
+import { mergeMap, map, withLatestFrom } from 'rxjs/operators';
 import { Observable, of, interval, } from 'rxjs';
 import { TypedAction } from '@ngrx/store/src/models';
 import { GeolocationService } from '../../main/service/geolocation.service';
@@ -57,6 +57,7 @@ export class GeoEffects {
 					mergeMap((data: any) => of(this.timeService.getCuttentTime(data))
 						.pipe(
 							map((time: any) => {
+								console.log('time Effect', time);
 								return setTime({ time });
 							})
 						)

@@ -17,4 +17,3 @@ export const selectWeather: any = createSelector(
 	selectGeoFeature,
 	(state: GeoState) => state.time
 );
-
