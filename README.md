@@ -1,4 +1,4 @@
-https://uppity-coil.surge.sh published version
+https://smelly-view.surge.sh/ published version
 
 
 # MyWeather
