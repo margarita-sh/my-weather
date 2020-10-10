@@ -99,11 +99,6 @@
 			line-height: .6em;
 			padding: 0.6em;
 			box-sizing: inherit;
-		 /*	.time {
-				font-size: 0.8em;
-			 	padding-top: 0.7em; 
-				color:fuchsia;
-			} */
 		}  
 		&--temperature {
 			font-size: 5em;
@@ -125,12 +120,9 @@
 	.app-main {
 	 	 &--city {
 			font-size: 1.4em;
-			// line-height: .6em;
-			// padding: 0.4em;
 		 	.time {
 				font-size: 0.8em;
 			 	padding-top: 0.7em; 
-				color:fuchsia;
 			} 
 		}  
 		&--temperature {
@@ -139,7 +131,6 @@
 
 		&--common-block {
 			font-size: 0.8em;
-			// margin-top: 1.5em;
 		}
 		&--general-indicators {
 			.indicators {
@@ -153,44 +144,20 @@
 	.app-main {
 	 	 &--city {
 			font-size: 1.2em;
-			// line-height: .6em;
-			// padding: 0.4em;
 		 	.time {
 				font-size: 0.6em;
 			 	padding-top: 0.6em; 
-				color:green;
 			} 
 		}  
-		&--temperature {
-			font-size: 4em;
-		}
-
-		&--common-block {
-			font-size: 0.6em;
-			// margin-top: 1.5em;
-		}
+		
 		&--general-indicators {
 			.indicators {
 				margin-top: 0.2em;
 			}
 		}
-		&--form-group {
-			display: flex;
-			background: rgb(255, 255, 255, 0.6);
-			flex-direction: row-reverse;
-			justify-content: space-between;
-			margin-bottom: 2em;
-			padding: 0.5em;
-			position: relative;
-			height: 3em;
-			z-index: 1;
-		}
+
 		&--form {
 			width: 15em;
-			position: absolute;
-			margin-right: 2em;
-			font-size: 0.8em;
-			z-index: 2;
 		}
 	}
 }
@@ -200,7 +167,9 @@
 	.app-main {
 		&--section {
 			flex-direction: column;
+			padding: 0.5em;
 		}
+	
 		&--data {
 			width: 100%;
 			margin: auto;
@@ -214,26 +183,18 @@
 		}
 	 	 &--city {
 			font-size: 1.2em;
-			// line-height: .6em;
-			// padding: 0.4em;
 		 	.time {
 				font-size: 0.8em;
 			 	padding-top: 0.6em; 
-				color:green;
 			} 
 		}  
 		&--temperature {
 			font-size: 6em;
 		}
 
-		&--common-block {
-			font-size: 0.6em;
-			// margin-top: 1.5em;
-		}
-		&--general-indicators {
-			.indicators {
-				margin-top: 0.2em;
-			}
-		}
+		 &--common-block {
+			font-size: 1em;
+		} 
+
 	}
 }
