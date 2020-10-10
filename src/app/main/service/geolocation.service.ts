@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-/* import { MetaDataProperty, GeocoderResponseMetaData } from '../model/model.geolocation'; */
 import { ModelGeolocation } from '../model/model.geolocation';
 
 @Injectable()
@@ -38,7 +37,7 @@ export class GeolocationService {
 
 // название города по координатам
 	public loadLocation(coord: string): Observable<ModelGeolocation.RootObject> {
-		const url: string = `https://geocode-maps.yandex.ru/1.x/?format=json&apikey=${this.myKey}&geocode=${coord}`;
+		const url: string = `https://geocode-maps.yandex.ru/1.x/?format=json&apikey=${this.myKey}&lang=en_RU&geocode=${coord}`;
 		return this.httpClient.get(url).pipe(
 			map((data: ModelGeolocation.RootObject) => {
 				const arrayData: ModelGeolocation.GeoObject[] = data.response.GeoObjectCollection.featureMember.map((item: any) => item.GeoObject);
@@ -58,7 +57,7 @@ export class GeolocationService {
 // по названию города из инпута выдает координаты, чтобы показывать корректно погоду
 	public loadCoordFromInput(cityInput: string): Observable<any> {
 		// tslint:disable-next-line: typedef
-		const url = `https://geocode-maps.yandex.ru/1.x/?format=json&apikey=${this.myKey}&geocode=${cityInput}`;
+		const url = `https://geocode-maps.yandex.ru/1.x/?format=json&apikey=${this.myKey}&lang=en_RU&geocode=${cityInput}`;
 		return this.httpClient.get(url).pipe(
 			map((data: ModelGeolocation.RootObject) => {
 				const arrayData: ModelGeolocation.GeoObject[] = data.response.GeoObjectCollection.featureMember.map((item: any) => {

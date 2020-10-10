@@ -57,7 +57,6 @@ export class GeoEffects {
 					mergeMap((data: any) => of(this.timeService.getCuttentTime(data))
 						.pipe(
 							map((time: any) => {
-								console.log('time Effect', time);
 								return setTime({ time });
 							})
 						)
